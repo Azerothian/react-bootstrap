@@ -1,7 +1,5 @@
-/** @jsx React.DOM */
+const progressInstance = (
+  <ProgressBar active now={45} />
+);
 
-var progressInstance = (
-    <ProgressBar active now={45} />
-  );
-
-React.renderComponent(progressInstance, mountNode);
+React.render(progressInstance, mountNode);

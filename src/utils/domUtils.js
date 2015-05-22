@@ -1,3 +1,15 @@
+import React from 'react';
+
+/**
+ * Get elements owner document
+ *
+ * @param {ReactComponent|HTMLElement} componentOrElement
+ * @returns {HTMLElement}
+ */
+function ownerDocument(componentOrElement) {
+  let elem = React.findDOMNode(componentOrElement);
+  return (elem && elem.ownerDocument) || document;
+}
 
 /**
  * Shortcut to compute element style
@@ -6,7 +18,7 @@
  * @returns {CssStyle}
  */
 function getComputedStyles(elem) {
-  return elem.ownerDocument.defaultView.getComputedStyle(elem, null);
+  return ownerDocument(elem).defaultView.getComputedStyle(elem, null);
 }
 
 /**
@@ -22,8 +34,8 @@ function getOffset(DOMNode) {
     return window.jQuery(DOMNode).offset();
   }
 
-  var docElem = document.documentElement;
-  var box = { top: 0, left: 0 };
+  let docElem = ownerDocument(DOMNode).documentElement;
+  let box = { top: 0, left: 0 };
 
   // If we don't have gBCR, just use 0,0 rather than error
   // BlackBerry 5, iOS 3 (original iPhone)
@@ -51,7 +63,7 @@ function getPosition(elem, offsetParent) {
     return window.jQuery(elem).position();
   }
 
-  var offset,
+  let offset,
       parentOffset = {top: 0, left: 0};
 
   // Fixed elements are offset from window (parentOffset = {top:0, left: 0}, because it is its only offset parent
@@ -62,7 +74,7 @@ function getPosition(elem, offsetParent) {
   } else {
     if (!offsetParent) {
       // Get *real* offsetParent
-      offsetParent = offsetParent(elem);
+      offsetParent = offsetParentFunc(elem);
     }
 
     // Get correct offsets
@@ -89,9 +101,9 @@ function getPosition(elem, offsetParent) {
  * @param {HTMLElement?} elem
  * @returns {HTMLElement}
  */
-function offsetParent(elem) {
-  var docElem = document.documentElement;
-  var offsetParent = elem.offsetParent || docElem;
+function offsetParentFunc(elem) {
+  let docElem = ownerDocument(elem).documentElement;
+  let offsetParent = elem.offsetParent || docElem;
 
   while ( offsetParent && ( offsetParent.nodeName !== 'HTML' &&
     getComputedStyles(offsetParent).position === 'static' ) ) {
@@ -101,9 +113,10 @@ function offsetParent(elem) {
   return offsetParent || docElem;
 }
 
-module.exports = {
-  getComputedStyles: getComputedStyles,
-  getOffset: getOffset,
-  getPosition: getPosition,
-  offsetParent: offsetParent
+export default {
+  ownerDocument,
+  getComputedStyles,
+  getOffset,
+  getPosition,
+  offsetParent: offsetParentFunc
 };

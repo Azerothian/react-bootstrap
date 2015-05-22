@@ -1,130 +1,78 @@
-/** @jsx React.DOM */
+import React from 'react';
+import Router from 'react-router';
 
-'use strict';
-
-var React = require('react');
-var Router = require('react-router-component');
-
-var HomePage = require('./HomePage');
-var GettingStartedPage = require('./GettingStartedPage');
-var ComponentsPage = require('./ComponentsPage');
-var NotFoundPage = require('./NotFoundPage');
-
-var Locations = Router.Locations;
-var Location = Router.Location;
-var NotFound = Router.NotFound;
-
-var PagesHolder = React.createClass({
-  render: function () {
-    return (
-        <Locations contextual>
-          <Location path="/" handler={HomePage} />
-          <Location path="/index.html" handler={HomePage} />
-          <Location path="/getting-started.html" handler={GettingStartedPage} />
-          <Location path="/components.html" handler={ComponentsPage} />
-          <NotFound handler={NotFoundPage} />
-        </Locations>
-      );
-  }
-});
-
-var Root = React.createClass({
+const Root = React.createClass({
   statics: {
-
-    /**
-     * Get the doctype the page expects to be rendered with
-     *
-     * @returns {string}
-     */
-    getDoctype: function () {
-      return '<!doctype html>';
-    },
 
     /**
      * Get the list of pages that are renderable
      *
      * @returns {Array}
      */
-    getPages: function () {
+    getPages() {
       return [
         'index.html',
+        'introduction.html',
         'getting-started.html',
         'components.html'
       ];
-    },
-
-    renderToString: function (props) {
-      return Root.getDoctype() +
-        React.renderComponentToString(Root(props));
-    },
-
-    /**
-     * Get the Base url this app sits at
-     * This url is appended to all app urls to make absolute url's within the app.
-     *
-     * @returns {string}
-     */
-    getBaseUrl: function () {
-      return '/';
     }
   },
 
-  render: function () {
+  getDefaultProps() {
+    return {
+      assetBaseUrl: ''
+    };
+  },
+
+  render() {
     // Dump out our current props to a global object via a script tag so
     // when initialising the browser environment we can bootstrap from the
     // same props as what each page was rendered with.
-    var browserInitScriptObj = {
+    let browserInitScriptObj = {
       __html:
-        "window.INITIAL_PROPS = " + JSON.stringify(this.props) + ";\n" +
+        `window.INITIAL_PROPS = ${JSON.stringify(this.props)};
         // console noop shim for IE8/9
-        "(function (w) {\n" +
-        "  var noop = function () {};\n" +
-        "  if (!w.console) {\n" +
-        "    w.console = {};\n" +
-        "    ['log', 'info', 'warn', 'error'].forEach(function (method) {\n" +
-        "      w.console[method] = noop;\n" +
-        "    });\n" +
-        " }\n" +
-        "}(window));\n"
+        (function (w) {
+          var noop = function () {};
+          if (!w.console) {
+            w.console = {};
+            ['log', 'info', 'warn', 'error'].forEach(function (method) {
+              w.console[method] = noop;
+            });
+         }
+        }(window));`
     };
 
-    var head = {
-      __html: '<title>React Bootstrap</title>' +
-        '<meta http-equiv="X-UA-Compatible" content="IE=edge" />' +
-        '<meta name="viewport" content="width=device-width, initial-scale=1.0" />' +
-        '<link href="vendor/bootstrap/bootstrap.css" rel="stylesheet" />' +
-        '<link href="vendor/bootstrap/docs.css" rel="stylesheet" />' +
-        '<link href="vendor/codemirror/codemirror.css" rel="stylesheet" />' +
-        '<link href="vendor/codemirror/solarized.css" rel="stylesheet" />' +
-        '<link href="vendor/codemirror/syntax.css" rel="stylesheet" />' +
-        '<link href="assets/style.css" rel="stylesheet" />' +
-        '<!--[if lt IE 9]>' +
-        '<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>' +
-        '<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>' +
-        '<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>' +
-        '<script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/3.4.0/es5-shim.js"></script>' +
-        '<script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/3.4.0/es5-sham.js"></script>' +
-        '<![endif]-->'
+    let head = {
+      __html: `<title>React Bootstrap</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="${this.props.assetBaseUrl}/assets/bundle.css" rel="stylesheet">
+        <link href="${this.props.assetBaseUrl}/assets/favicon.ico" type="image/x-icon" rel="icon">
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/3.4.0/es5-shim.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/3.4.0/es5-sham.js"></script>
+        <![endif]-->`
     };
 
     return (
-        <html>
-          <head dangerouslySetInnerHTML={head} />
+      <html>
+        <head dangerouslySetInnerHTML={head} />
 
-          <body>
-            <Locations path={Root.getBaseUrl() + this.props.initialPath}>
-              <Location path={Root.getBaseUrl() + '*'} handler={PagesHolder} />
-            </Locations>
+        <body>
+          <Router.RouteHandler />
 
-            <script dangerouslySetInnerHTML={browserInitScriptObj} />
-            <script src="vendor/codemirror/codemirror.js" />
-            <script src="vendor/codemirror/javascript.js" />
-            <script src="vendor/JSXTransformer.js" />
-            <script src="assets/bundle.js" />
-          </body>
-        </html>
-      );
+          <script dangerouslySetInnerHTML={browserInitScriptObj} />
+          <script src={`${this.props.assetBaseUrl}/assets/bundle.js`} />
+        </body>
+      </html>
+    );
   }
 });
 
-module.exports = Root;
+
+export default Root;

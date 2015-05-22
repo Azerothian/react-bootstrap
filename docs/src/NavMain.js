@@ -1,51 +1,54 @@
-/** @jsx React.DOM */
+import React from 'react';
+import { Link } from 'react-router';
+import Navbar from '../../src/Navbar';
+import Nav from '../../src/Nav';
 
-'use strict';
-
-var React = require('react');
-var Router = require('react-router-component');
-var Navbar = require('../../cjs/Navbar');
-var Nav = require('../../cjs/Nav');
-
-var InternalLink = Router.Link;
-
-var NAV_LINKS = {
+const NAV_LINKS = {
+  'introduction': {
+    link: 'introduction',
+    title: 'Introduction'
+  },
   'getting-started': {
-    link: '/getting-started.html',
+    link: 'getting-started',
     title: 'Getting started'
   },
   'components': {
-    link: '/components.html',
+    link: 'components',
     title: 'Components'
   }
 };
 
-var NavMain = React.createClass({
+const NavMain = React.createClass({
   propTypes: {
     activePage: React.PropTypes.string
   },
 
-  render: function () {
-    var brand = <InternalLink href="/" className="navbar-brand">React Bootstrap</InternalLink>;
+  render() {
+    let brand = <Link to='home' className="navbar-brand">React Bootstrap</Link>;
+    let links = Object.keys(NAV_LINKS).map(this.renderNavItem).concat([
+      <li key='github-link'>
+        <a href='https://github.com/react-bootstrap/react-bootstrap' target='_blank'>GitHub</a>
+      </li>
+    ]);
 
     return (
-      <Navbar componentClass={React.DOM.header} brand={brand} staticTop className="bs-docs-nav" role="banner" toggleNavKey={0}>
-        <Nav className="bs-navbar-collapse" role="navigation" key={0} id="top">
-          {Object.keys(NAV_LINKS).map(this.renderNavItem)}
+      <Navbar componentClass='header' brand={brand} staticTop className="bs-docs-nav" role="banner" toggleNavKey={0}>
+        <Nav className="bs-navbar-collapse" role="navigation" eventKey={0} id="top">
+          {links}
         </Nav>
       </Navbar>
     );
   },
 
-  renderNavItem: function (linkName) {
-    var link = NAV_LINKS[linkName];
+  renderNavItem(linkName) {
+    let link = NAV_LINKS[linkName];
 
     return (
         <li className={this.props.activePage === linkName ? 'active' : null} key={linkName}>
-          <InternalLink href={link.link}>{link.title}</InternalLink>
+          <Link to={link.link}>{link.title}</Link>
         </li>
       );
   }
 });
 
-module.exports = NavMain;
+export default NavMain;

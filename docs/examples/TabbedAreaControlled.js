@@ -1,21 +1,24 @@
-/** @jsx React.DOM */
+const ControlledTabArea = React.createClass({
+  getInitialState() {
+    return {
+      key: 1
+    };
+  },
 
-var key = 1;
+  handleSelect(key) {
+    alert('selected ' + key);
+    this.setState({key});
+  },
 
-function renderTabbedArea () {
-  var tabbedAreaInstance = (
-    <TabbedArea activeKey={key} onSelect={handleSelect}>
-      <TabPane key={1} tab="Tab 1">TabPane 1 content</TabPane>
-      <TabPane key={2} tab="Tab 2">TabPane 2 content</TabPane>
-    </TabbedArea>
-  );
-  React.renderComponent(tabbedAreaInstance, mountNode);
-}
+  render() {
+    return (
+      <TabbedArea activeKey={this.state.key} onSelect={this.handleSelect}>
+        <TabPane eventKey={1} tab='Tab 1'>TabPane 1 content</TabPane>
+        <TabPane eventKey={2} tab='Tab 2'>TabPane 2 content</TabPane>
+        <TabPane eventKey={3} tab='Tab 3' disabled={true}>TabPane 3 content</TabPane>
+      </TabbedArea>
+    );
+  }
+});
 
-function handleSelect (selectedKey) {
-  alert('selected ' + selectedKey);
-  key = selectedKey;
-  renderTabbedArea();
-}
-
-renderTabbedArea();
+React.render(<ControlledTabArea />, mountNode);

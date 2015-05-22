@@ -1,22 +1,19 @@
-/** @jsx React.DOM */
-
-function handleHide() {
-  alert('Close me!')
-}
-
-var modalInstance = (
-    <Modal title="Modal title"
+const modalInstance = (
+  <div className='static-modal'>
+    <Modal title='Modal title'
       backdrop={false}
       animation={false}
-      onRequestHide={handleHide}>
-      <div className="modal-body">
+      container={mountNode}
+      onRequestHide={function() {}}>
+      <div className='modal-body'>
         One fine body...
       </div>
-      <div className="modal-footer">
+      <div className='modal-footer'>
         <Button>Close</Button>
-        <Button bsStyle="primary">Save changes</Button>
+        <Button bsStyle='primary'>Save changes</Button>
       </div>
     </Modal>
-  );
+  </div>
+);
 
-React.renderComponent(modalInstance, mountNode);
+React.render(modalInstance, mountNode);

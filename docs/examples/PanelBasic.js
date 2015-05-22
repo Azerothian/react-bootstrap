@@ -1,9 +1,7 @@
-/** @jsx React.DOM */
+const panelInstance = (
+  <Panel>
+    Basic panel example
+  </Panel>
+);
 
-var panelInstance = (
-    <Panel>
-      Basic panel example
-    </Panel>
-  );
-
-React.renderComponent(panelInstance, mountNode);
+React.render(panelInstance, mountNode);

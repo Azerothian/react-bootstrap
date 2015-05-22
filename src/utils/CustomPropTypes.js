@@ -1,18 +1,6 @@
-var React = require('react');
+const ANONYMOUS = '<<anonymous>>';
 
-var ANONYMOUS = '<<anonymous>>';
-
-var CustomPropTypes = {
-  /**
-   * Checks whether a prop is a valid React class
-   *
-   * @param props
-   * @param propName
-   * @param componentName
-   * @returns {Error|undefined}
-   */
-  componentClass: createComponentClassChecker(),
-
+let CustomPropTypes = {
   /**
    * Checks whether a prop provides a DOM element
    *
@@ -25,7 +13,16 @@ var CustomPropTypes = {
    * @param componentName
    * @returns {Error|undefined}
    */
-  mountable: createMountableChecker()
+  mountable: createMountableChecker(),
+  /**
+   * Checks whether a prop matches a key of an associated object
+   *
+   * @param props
+   * @param propName
+   * @param componentName
+   * @returns {Error|undefined}
+   */
+  keyOf: createKeyOfChecker
 };
 
 /**
@@ -49,32 +46,19 @@ function createChainableTypeChecker(validate) {
     }
   }
 
-  var chainedCheckType = checkType.bind(null, false);
+  let chainedCheckType = checkType.bind(null, false);
   chainedCheckType.isRequired = checkType.bind(null, true);
 
   return chainedCheckType;
 }
 
-function createComponentClassChecker() {
-  function validate(props, propName, componentName) {
-    if (!React.isValidClass(props[propName])) {
-      return new Error(
-        'Invalid prop `' + propName + '` supplied to ' +
-          '`' + componentName + '`, expected a valid React class.'
-      );
-    }
-  }
-
-  return createChainableTypeChecker(validate);
-}
-
 function createMountableChecker() {
   function validate(props, propName, componentName) {
     if (typeof props[propName] !== 'object' ||
-      typeof props[propName].getDOMNode !== 'function' && props[propName].nodeType !== 1) {
+      typeof props[propName].render !== 'function' && props[propName].nodeType !== 1) {
       return new Error(
         'Invalid prop `' + propName + '` supplied to ' +
-          '`' + componentName + '`, expected a DOM element or an object that has a `getDOMNode` method'
+          '`' + componentName + '`, expected a DOM element or an object that has a `render` method'
       );
     }
   }
@@ -82,4 +66,18 @@ function createMountableChecker() {
   return createChainableTypeChecker(validate);
 }
 
-module.exports = CustomPropTypes;
+function createKeyOfChecker(obj) {
+  function validate(props, propName, componentName) {
+    let propValue = props[propName];
+    if (!obj.hasOwnProperty(propValue)) {
+      let valuesString = JSON.stringify(Object.keys(obj));
+      return new Error(
+        `Invalid prop '${propName}' of value '${propValue}' ` +
+        `supplied to '${componentName}', expected one of ${valuesString}.`
+      );
+    }
+  }
+  return createChainableTypeChecker(validate);
+}
+
+export default CustomPropTypes;

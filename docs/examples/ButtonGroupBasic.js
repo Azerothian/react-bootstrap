@@ -1,11 +1,9 @@
-/** @jsx React.DOM */
+const buttonGroupInstance = (
+  <ButtonGroup>
+    <Button>Left</Button>
+    <Button>Middle</Button>
+    <Button>Right</Button>
+  </ButtonGroup>
+);
 
-var buttonGroupInstance = (
-    <ButtonGroup>
-      <Button>Left</Button>
-      <Button>Middle</Button>
-      <Button>Right</Button>
-    </ButtonGroup>
-  );
-
-React.renderComponent(buttonGroupInstance, mountNode);
+React.render(buttonGroupInstance, mountNode);

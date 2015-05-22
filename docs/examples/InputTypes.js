@@ -1,23 +1,25 @@
-/** @jsx React.DOM */
+const inputTypeInstance = (
+  <form>
+    <Input type='text' label='Text' placeholder='Enter text' />
+    <Input type='email' label='Email Address' placeholder='Enter email' />
+    <Input type='password' label='Password' />
+    <Input type='file' label='File' help='[Optional] Block level help text' />
+    <Input type='checkbox' label='Checkbox' checked readOnly />
+    <Input type='radio' label='Radio' checked readOnly />
+    <Input type='select' label='Select' placeholder='select'>
+      <option value='select'>select</option>
+      <option value='other'>...</option>
+    </Input>
+    <Input type='select' label='Multiple Select' multiple>
+      <option value='select'>select (multiple)</option>
+      <option value='other'>...</option>
+    </Input>
+    <Input type='textarea' label='Text Area' placeholder='textarea' />
+    <Input type='static' value='Static Text' />
+    <ButtonInput value='Button Input' />
+    <ButtonInput type='reset' value='Reset Button' />
+    <ButtonInput type='submit' value='Submit Button' />
+  </form>
+);
 
-var inputTypeInstance = (
-    <form>
-      <Input type="text" defaultValue="text" />
-      <Input type="password" defaultValue="secret" />
-      <Input type="checkbox" checked readOnly label="checkbox"/>
-      <Input type="radio" checked readOnly label="radio"/>
-      <Input type="select" defaultValue="select">
-        <option value="select">select</option>
-        <option value="other">...</option>
-      </Input>
-      <Input type="select" multiple>
-        <option value="select">select (multiple)</option>
-        <option value="other">...</option>
-      </Input>
-      <Input type="textarea" defaultValue="textarea" />
-      <Input type="static" value="static" />
-      <Input type="submit" bsStyle='primary' value="Submit button" />
-    </form>
-  );
-
-React.renderComponent(inputTypeInstance, mountNode);
+React.render(inputTypeInstance, mountNode);

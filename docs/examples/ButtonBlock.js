@@ -1,11 +1,10 @@
-/** @jsx React.DOM */
-var wellStyles = {maxWidth: 400, margin: '0 auto 10px'};
+const wellStyles = {maxWidth: 400, margin: '0 auto 10px'};
 
-var buttonsInstance = (
-    <div className="well" style={wellStyles}>
-      <Button bsStyle="primary" bsSize="large" block>Block level button</Button>
-      <Button bsSize="large" block>Block level button</Button>
-    </div>
-  );
+const buttonsInstance = (
+  <div className='well' style={wellStyles}>
+    <Button bsStyle='primary' bsSize='large' block>Block level button</Button>
+    <Button bsSize='large' block>Block level button</Button>
+  </div>
+);
 
-React.renderComponent(buttonsInstance, mountNode);
+React.render(buttonsInstance, mountNode);

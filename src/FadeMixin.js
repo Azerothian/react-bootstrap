@@ -1,25 +1,41 @@
-var React = require('react');
+import React from 'react';
+import domUtils from './utils/domUtils';
 
 // TODO: listen for onTransitionEnd to remove el
-module.exports = {
-  _fadeIn: function () {
-    var els;
+function getElementsAndSelf (root, classes){
+  let els = root.querySelectorAll('.' + classes.join('.'));
+
+  els = [].map.call(els, function(e){ return e; });
+
+  for(let i = 0; i < classes.length; i++){
+    if( !root.className.match(new RegExp('\\b' + classes[i] + '\\b'))){
+      return els;
+    }
+  }
+  els.unshift(root);
+  return els;
+}
+
+export default {
+  _fadeIn() {
+    let els;
 
     if (this.isMounted()) {
-      els = this.getDOMNode().querySelectorAll('.fade');
+      els = getElementsAndSelf(React.findDOMNode(this), ['fade']);
+
       if (els.length) {
-        Array.prototype.forEach.call(els, function (el) {
+        els.forEach(function (el) {
           el.className += ' in';
         });
       }
     }
   },
 
-  _fadeOut: function () {
-    var els = this._fadeOutEl.querySelectorAll('.fade.in');
+  _fadeOut() {
+    let els = getElementsAndSelf(this._fadeOutEl, ['fade', 'in']);
 
     if (els.length) {
-      Array.prototype.forEach.call(els, function (el) {
+      els.forEach(function (el) {
         el.className = el.className.replace(/\bin\b/, '');
       });
     }
@@ -27,25 +43,28 @@ module.exports = {
     setTimeout(this._handleFadeOutEnd, 300);
   },
 
-  _handleFadeOutEnd: function () {
+  _handleFadeOutEnd() {
     if (this._fadeOutEl && this._fadeOutEl.parentNode) {
       this._fadeOutEl.parentNode.removeChild(this._fadeOutEl);
     }
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     if (document.querySelectorAll) {
       // Firefox needs delay for transition to be triggered
       setTimeout(this._fadeIn, 20);
     }
   },
 
-  componentWillUnmount: function () {
-    var els = this.getDOMNode().querySelectorAll('.fade');
+  componentWillUnmount() {
+    let els = getElementsAndSelf(React.findDOMNode(this), ['fade']),
+        container = (this.props.container && React.findDOMNode(this.props.container)) ||
+          domUtils.ownerDocument(this).body;
+
     if (els.length) {
       this._fadeOutEl = document.createElement('div');
-      document.body.appendChild(this._fadeOutEl);
-      this._fadeOutEl.appendChild(this.getDOMNode().cloneNode(true));
+      container.appendChild(this._fadeOutEl);
+      this._fadeOutEl.appendChild(React.findDOMNode(this).cloneNode(true));
       // Firefox needs delay for transition to be triggered
       setTimeout(this._fadeOut, 20);
     }

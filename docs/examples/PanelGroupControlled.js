@@ -1,20 +1,22 @@
-/** @jsx React.DOM */
+const ControlledPanelGroup = React.createClass({
+  getInitialState() {
+    return {
+      activeKey: 1
+    };
+  },
 
-var key = 1;
-var panelGroupInstance;
-var renderedInstance;
+  handleSelect(activeKey) {
+    this.setState({ activeKey });
+  },
 
-function handleSelect (selectedKey) {
-  renderedInstance.setProps({
-    activeKey: selectedKey
-  });
-}
+  render() {
+    return (
+      <PanelGroup activeKey={this.state.activeKey} onSelect={this.handleSelect} accordion>
+        <Panel header='Panel 1' eventKey='1'>Panel 1 content</Panel>
+        <Panel header='Panel 2' eventKey='2'>Panel 2 content</Panel>
+      </PanelGroup>
+    );
+  }
+});
 
-panelGroupInstance = (
-  <PanelGroup activeKey={key} onSelect={handleSelect} accordion>
-    <Panel header="Panel 1" key={1}>Panel 1 content</Panel>
-    <Panel header="Panel 2" key={2}>Panel 2 content</Panel>
-  </PanelGroup>
-);
-
-renderedInstance = React.renderComponent(panelGroupInstance, mountNode);
+React.render(<ControlledPanelGroup />, mountNode);

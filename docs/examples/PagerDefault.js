@@ -1,10 +1,8 @@
-/** @jsx React.DOM */
+const pagerInstance = (
+  <Pager>
+    <PageItem href='#'>Previous</PageItem>
+    <PageItem href='#'>Next</PageItem>
+  </Pager>
+);
 
-var pagerInstance = (
-    <Pager>
-      <PageItem href="#">Previous</PageItem>
-      <PageItem href="#">Next</PageItem>
-    </Pager>
-  );
-
-React.renderComponent(pagerInstance, mountNode);
+React.render(pagerInstance, mountNode);

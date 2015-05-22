@@ -1,27 +1,13 @@
-var React = require('react');
-var CustomPropTypes = require('./utils/CustomPropTypes');
+import React from 'react';
+import CustomPropTypes from './utils/CustomPropTypes';
+import domUtils from './utils/domUtils';
 
-module.exports = {
+export default {
   propTypes: {
     container: CustomPropTypes.mountable
   },
 
-  getDefaultProps: function () {
-    return {
-      container: {
-        // Provide `getDOMNode` fn mocking a React component API. The `document.body`
-        // reference needs to be contained within this function so that it is not accessed
-        // in environments where it would not be defined, e.g. nodejs. Equally this is needed
-        // before the body is defined where `document.body === null`, this ensures
-        // `document.body` is only accessed after componentDidMount.
-        getDOMNode: function getDOMNode() {
-          return document.body;
-        }
-      }
-    };
-  },
-
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     this._unrenderOverlay();
     if (this._overlayTarget) {
       this.getContainerDOMNode()
@@ -30,44 +16,54 @@ module.exports = {
     }
   },
 
-  componentDidUpdate: function () {
+  componentDidUpdate() {
     this._renderOverlay();
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     this._renderOverlay();
   },
 
-  _mountOverlayTarget: function () {
+  _mountOverlayTarget() {
     this._overlayTarget = document.createElement('div');
     this.getContainerDOMNode()
       .appendChild(this._overlayTarget);
   },
 
-  _renderOverlay: function () {
+  _renderOverlay() {
     if (!this._overlayTarget) {
       this._mountOverlayTarget();
     }
 
+    let overlay = this.renderOverlay();
+
     // Save reference to help testing
-    this._overlayInstance = React.renderComponent(this.renderOverlay(), this._overlayTarget);
+    if (overlay !== null) {
+      this._overlayInstance = React.render(overlay, this._overlayTarget);
+    } else {
+      // Unrender if the component is null for transitions to null
+      this._unrenderOverlay();
+    }
   },
 
-  _unrenderOverlay: function () {
+  _unrenderOverlay() {
     React.unmountComponentAtNode(this._overlayTarget);
     this._overlayInstance = null;
   },
 
-  getOverlayDOMNode: function () {
+  getOverlayDOMNode() {
     if (!this.isMounted()) {
       throw new Error('getOverlayDOMNode(): A component must be mounted to have a DOM node.');
     }
 
-    return this._overlayInstance.getDOMNode();
+    if (this._overlayInstance) {
+      return React.findDOMNode(this._overlayInstance);
+    }
+
+    return null;
   },
 
-  getContainerDOMNode: function () {
-    return this.props.container.getDOMNode ?
-      this.props.container.getDOMNode() : this.props.container;
+  getContainerDOMNode() {
+    return React.findDOMNode(this.props.container) || domUtils.ownerDocument(this).body;
   }
 };

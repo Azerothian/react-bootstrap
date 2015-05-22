@@ -1,35 +1,33 @@
-/** @jsx React.DOM */
+const title = (
+  <h3>Panel title</h3>
+);
 
-var title = (
-    <h3>Panel title</h3>
-  );
+const panelsInstance = (
+  <div>
+    <Panel header={title}>
+      Panel content
+    </Panel>
 
-var panelsInstance = (
-    <div>
-      <Panel header={title}>
-        Panel content
-      </Panel>
+    <Panel header={title} bsStyle='primary'>
+      Panel content
+    </Panel>
 
-      <Panel header={title} bsStyle="primary">
-        Panel content
-      </Panel>
+    <Panel header={title} bsStyle='success'>
+      Panel content
+    </Panel>
 
-      <Panel header={title} bsStyle="success">
-        Panel content
-      </Panel>
+    <Panel header={title} bsStyle='info'>
+      Panel content
+    </Panel>
 
-      <Panel header={title} bsStyle="info">
-        Panel content
-      </Panel>
+    <Panel header={title} bsStyle='warning'>
+      Panel content
+    </Panel>
 
-      <Panel header={title} bsStyle="warning">
-        Panel content
-      </Panel>
+    <Panel header={title} bsStyle='danger'>
+      Panel content
+    </Panel>
+  </div>
+);
 
-      <Panel header={title} bsStyle="danger">
-        Panel content
-      </Panel>
-    </div>
-  );
-
-React.renderComponent(panelsInstance, mountNode);
+React.render(panelsInstance, mountNode);

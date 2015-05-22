@@ -1,33 +1,43 @@
-'use strict';
+import 'colors';
+import React from 'react';
+import express from 'express';
+import path from 'path';
+import Router from 'react-router';
+import routes from './src/Routes';
+import httpProxy from 'http-proxy';
 
-var express = require('express');
+const development = process.env.NODE_ENV !== 'production';
+const port = process.env.PORT || 4000;
 
-var development = process.env.NODE_ENV !== 'production';
-var app = express();
+let app = express();
 
 if (development) {
-  var path = require('path');
-  var url = require('url');
-  var browserify = require('connect-browserify');
-  var nodejsx = require('node-jsx').install();
-  var Root = require('./src/Root');
+  let proxy = httpProxy.createProxyServer();
+  let webpackPort = process.env.WEBPACK_DEV_PORT;
+  let target = `http://localhost:${webpackPort}`;
 
-  app = app
-    .get('/assets/bundle.js', browserify('./client', {debug: true, watch: false}))
-    .use('/assets', express.static(path.join(__dirname, 'assets')))
-    .use('/vendor', express.static(path.join(__dirname, 'vendor')))
-    .use(function renderApp(req, res) {
-      var fileName = url.parse(req.url).pathname;
-      var RootHTML = Root.renderToString({initialPath: fileName});
+  app.get('/assets/*', function (req, res) {
+    proxy.web(req, res, { target });
+  });
 
-      res.send(RootHTML);
+  app.use(function renderApp(req, res) {
+    res.header('Access-Control-Allow-Origin', target);
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+
+    Router.run(routes, req.url, Handler => {
+      let html = React.renderToString(<Handler assetBaseUrl={target} />);
+      res.send('<!doctype html>' + html);
     });
+  });
+
+  proxy.on('error', function(e) {
+    console.log('Could not connect to webpack proxy'.red);
+    console.log(e.toString().red);
+  });
 } else {
-  app = app
-    .use(express.static(__dirname));
+  app.use(express.static(path.join(__dirname, '../docs-built')));
 }
 
-app
-  .listen(4000, function () {
-    console.log('Server started at http://localhost:4000');
-  });
+app.listen(port, function () {
+  console.log(`Server started at http://localhost:${port}`);
+});

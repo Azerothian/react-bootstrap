@@ -1,4 +1,4 @@
-var React = require('react');
+import React from 'react';
 
 /**
  * Maps children that are typically specified as `props.children`,
@@ -13,11 +13,11 @@ var React = require('react');
  * @return {object} Object containing the ordered map of results.
  */
 function mapValidComponents(children, func, context) {
-  var index = 0;
+  let index = 0;
 
   return React.Children.map(children, function (child) {
-    if (React.isValidComponent(child)) {
-      var lastIndex = index;
+    if (React.isValidElement(child)) {
+      let lastIndex = index;
       index++;
       return func.call(context, child, lastIndex);
     }
@@ -38,10 +38,10 @@ function mapValidComponents(children, func, context) {
  * @param {*} forEachContext Context for forEachContext.
  */
 function forEachValidComponents(children, func, context) {
-  var index = 0;
+  let index = 0;
 
   return React.Children.forEach(children, function (child) {
-    if (React.isValidComponent(child)) {
+    if (React.isValidElement(child)) {
       func.call(context, child, index);
       index++;
     }
@@ -55,10 +55,10 @@ function forEachValidComponents(children, func, context) {
  * @returns {number}
  */
 function numberOfValidComponents(children) {
-  var count = 0;
+  let count = 0;
 
   React.Children.forEach(children, function (child) {
-    if (React.isValidComponent(child)) { count++; }
+    if (React.isValidElement(child)) { count++; }
   });
 
   return count;
@@ -71,10 +71,10 @@ function numberOfValidComponents(children) {
  * @returns {boolean}
  */
 function hasValidComponent(children) {
-  var hasValid = false;
+  let hasValid = false;
 
   React.Children.forEach(children, function (child) {
-    if (!hasValid && React.isValidComponent(child)) {
+    if (!hasValid && React.isValidElement(child)) {
       hasValid = true;
     }
   });
@@ -82,9 +82,9 @@ function hasValidComponent(children) {
   return hasValid;
 }
 
-module.exports = {
+export default {
   map: mapValidComponents,
   forEach: forEachValidComponents,
   numberOf: numberOfValidComponents,
-  hasValidComponent: hasValidComponent
+  hasValidComponent
 };

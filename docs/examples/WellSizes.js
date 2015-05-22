@@ -1,10 +1,8 @@
-/** @jsx React.DOM */
-
-var wellInstance = (
+const wellInstance = (
   <div>
-    <Well bsSize="large">Look I'm in a large well!</Well>
-    <Well bsSize="small">Look I'm in a small well!</Well>
+    <Well bsSize='large'>Look I'm in a large well!</Well>
+    <Well bsSize='small'>Look I'm in a small well!</Well>
   </div>
 );
 
-React.renderComponent(wellInstance, mountNode);
+React.render(wellInstance, mountNode);

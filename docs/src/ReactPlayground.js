@@ -1,52 +1,102 @@
-/**
- * @jsx React.DOM
- */
+import * as modReact from 'react';
+import * as modClassNames from 'classnames';
+import * as modAccordion from '../../src/Accordion';
+import * as modAlert from '../../src/Alert';
+import * as modBadge from '../../src/Badge';
+import * as modmodButton from '../../src/Button';
+import * as modButtonGroup from '../../src/ButtonGroup';
+import * as modButtonInput from '../../src/ButtonInput';
+import * as modmodButtonToolbar from '../../src/ButtonToolbar';
+import * as modCollapsibleNav from '../../src/CollapsibleNav';
+import * as modCollapsibleMixin from '../../src/CollapsibleMixin';
+import * as modCarousel from '../../src/Carousel';
+import * as modCarouselItem from '../../src/CarouselItem';
+import * as modCol from '../../src/Col';
+import * as modDropdownButton from '../../src/DropdownButton';
+import * as modGlyphicon from '../../src/Glyphicon';
+import * as modGrid from '../../src/Grid';
+import * as modInput from '../../src/Input';
+import * as modJumbotron from '../../src/Jumbotron';
+import * as modLabel from '../../src/Label';
+import * as modListGroup from '../../src/ListGroup';
+import * as modListGroupItem from '../../src/ListGroupItem';
+import * as modNav from '../../src/Nav';
+import * as modNavbar from '../../src/Navbar';
+import * as modNavItem from '../../src/NavItem';
+import * as modMenuItem from '../../src/MenuItem';
+import * as modModal from '../../src/Modal';
+import * as modModalTrigger from '../../src/ModalTrigger';
+import * as modOverlayTrigger from '../../src/OverlayTrigger';
+import * as modOverlayMixin from '../../src/OverlayMixin';
+import * as modPageHeader from '../../src/PageHeader';
+import * as modPageItem from '../../src/PageItem';
+import * as modPager from '../../src/Pager';
+import * as modPanel from '../../src/Panel';
+import * as modPanelGroup from '../../src/PanelGroup';
+import * as modPopover from '../../src/Popover';
+import * as modProgressBar from '../../src/ProgressBar';
+import * as modRow from '../../src/Row';
+import * as modSplitButton from '../../src/SplitButton';
+import * as modTabbedArea from '../../src/TabbedArea';
+import * as modTable from '../../src/Table';
+import * as modTabPane from '../../src/TabPane';
+import * as modThumbnail from '../../src/Thumbnail';
+import * as modTooltip from '../../src/Tooltip';
+import * as modWell from '../../src/Well';
 
-var React = require('react');
-var classSet = require('react/lib/cx');
-var CodeMirror = global.CodeMirror;
-var JSXTransformer = global.JSXTransformer;
-var Accordion = require('../../cjs/Accordion');
-var Alert = require('../../cjs/Alert');
-var Badge = require('../../cjs/Badge');
-var Button = require('../../cjs/Button');
-var ButtonGroup = require('../../cjs/ButtonGroup');
-var ButtonToolbar = require('../../cjs/ButtonToolbar');
-var Carousel = require('../../cjs/Carousel');
-var CarouselItem = require('../../cjs/CarouselItem');
-var Col = require('../../cjs/Col');
-var DropdownButton = require('../../cjs/DropdownButton');
-var Glyphicon = require('../../cjs/Glyphicon');
-var Grid = require('../../cjs/Grid');
-var Input = require('../../cjs/Input');
-var Jumbotron = require('../../cjs/Jumbotron');
-var Label = require('../../cjs/Label');
-var ListGroup = require('../../cjs/ListGroup');
-var ListGroupItem = require('../../cjs/ListGroupItem');
-var Nav = require('../../cjs/Nav');
-var Navbar = require('../../cjs/Navbar');
-var NavItem = require('../../cjs/NavItem');
-var MenuItem = require('../../cjs/MenuItem');
-var Modal = require('../../cjs/Modal');
-var ModalTrigger = require('../../cjs/ModalTrigger');
-var OverlayTrigger = require('../../cjs/OverlayTrigger');
-var OverlayMixin = require('../../cjs/OverlayMixin');
-var PageHeader = require('../../cjs/PageHeader');
-var PageItem = require('../../cjs/PageItem');
-var Pager = require('../../cjs/Pager');
-var Panel = require('../../cjs/Panel');
-var PanelGroup = require('../../cjs/PanelGroup');
-var Popover = require('../../cjs/Popover');
-var ProgressBar = require('../../cjs/ProgressBar');
-var Row = require('../../cjs/Row');
-var SplitButton = require('../../cjs/SplitButton');
-var TabbedArea = require('../../cjs/TabbedArea');
-var Table = require('../../cjs/Table');
-var TabPane = require('../../cjs/TabPane');
-var Tooltip = require('../../cjs/Tooltip');
-var Well = require('../../cjs/Well');
+import babel from 'babel-core/browser';
 
-var IS_MOBILE = typeof navigator !== 'undefined' && (
+import CodeExample from './CodeExample';
+
+const classNames = modClassNames.default;
+/* eslint-disable */
+const React = modReact.default;
+const Accordion = modAccordion.default;
+const Alert = modAlert.default;
+const Badge = modBadge.default;
+const Button = modmodButton.default;
+const ButtonGroup = modButtonGroup.default;
+const ButtonInput = modButtonInput.default;
+const ButtonToolbar = modmodButtonToolbar.default;
+const CollapsibleNav = modCollapsibleNav.default;
+const CollapsibleMixin = modCollapsibleMixin.default;
+const Carousel = modCarousel.default;
+const CarouselItem = modCarouselItem.default;
+const Col = modCol.default;
+const DropdownButton = modDropdownButton.default;
+const Glyphicon = modGlyphicon.default;
+const Grid = modGrid.default;
+const Input = modInput.default;
+const Jumbotron = modJumbotron.default;
+const Label = modLabel.default;
+const ListGroup = modListGroup.default;
+const ListGroupItem = modListGroupItem.default;
+const Nav = modNav.default;
+const Navbar = modNavbar.default;
+const NavItem = modNavItem.default;
+const MenuItem = modMenuItem.default;
+const Modal = modModal.default;
+const ModalTrigger = modModalTrigger.default;
+const OverlayTrigger = modOverlayTrigger.default;
+const OverlayMixin = modOverlayMixin.default;
+const PageHeader = modPageHeader.default;
+const PageItem = modPageItem.default;
+const Pager = modPager.default;
+const Panel = modPanel.default;
+const PanelGroup = modPanelGroup.default;
+const Popover = modPopover.default;
+const ProgressBar = modProgressBar.default;
+const Row = modRow.default;
+const SplitButton = modSplitButton.default;
+const TabbedArea = modTabbedArea.default;
+const Table = modTable.default;
+const TabPane = modTabPane.default;
+const Thumbnail = modThumbnail.default;
+const Tooltip = modTooltip.default;
+const Well = modWell.default;
+/* eslint-enable */
+
+const IS_MOBILE = typeof navigator !== 'undefined' && (
   navigator.userAgent.match(/Android/i)
     || navigator.userAgent.match(/webOS/i)
     || navigator.userAgent.match(/iPhone/i)
@@ -56,43 +106,55 @@ var IS_MOBILE = typeof navigator !== 'undefined' && (
     || navigator.userAgent.match(/Windows Phone/i)
   );
 
-var CodeMirrorEditor = React.createClass({
-  componentDidMount: function() {
-    if (IS_MOBILE) return;
+class CodeMirrorEditor extends React.Component {
+  constructor(props) {
+    super(props);
 
-    this.editor = CodeMirror.fromTextArea(this.refs.editor.getDOMNode(), {
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    if (IS_MOBILE || CodeMirror === undefined) {
+      return;
+    }
+
+    this.editor = CodeMirror.fromTextArea(React.findDOMNode(this.refs.editor), {
       mode: 'javascript',
       lineNumbers: false,
-      lineWrapping: true,
+      lineWrapping: false,
       matchBrackets: true,
       tabSize: 2,
-      theme: 'solarized-light',
+      theme: 'solarized light',
       readOnly: this.props.readOnly
     });
     this.editor.on('change', this.handleChange);
-  },
+  }
 
-  componentDidUpdate: function() {
+  componentDidUpdate() {
     if (this.props.readOnly) {
       this.editor.setValue(this.props.codeText);
     }
-  },
+  }
 
-  handleChange: function() {
-    if (!this.props.readOnly) {
-      this.props.onChange && this.props.onChange(this.editor.getValue());
+  handleChange() {
+    if (!this.props.readOnly && this.props.onChange) {
+      this.props.onChange(this.editor.getValue());
     }
-  },
+  }
 
-  render: function() {
+  render() {
     // wrap in a div to fully contain CodeMirror
-    var editor;
+    let editor;
 
     if (IS_MOBILE) {
-      var preStyles = {overflow: 'scroll'};
-      editor = <pre style={preStyles}>{this.props.codeText}</pre>;
+      editor = (
+        <CodeExample
+          mode='javascript'
+          codeText={this.props.codeText}
+        />
+      );
     } else {
-      editor = <textarea ref="editor" defaultValue={this.props.codeText} />;
+      editor = <textarea ref='editor' defaultValue={this.props.codeText} />;
     }
 
     return (
@@ -101,20 +163,20 @@ var CodeMirrorEditor = React.createClass({
       </div>
       );
   }
-});
+}
 
-var selfCleaningTimeout = {
-  componentDidUpdate: function() {
+const selfCleaningTimeout = {
+  componentDidUpdate() {
     clearTimeout(this.timeoutID);
   },
 
-  setTimeout: function() {
+  updateTimeout() {
     clearTimeout(this.timeoutID);
     this.timeoutID = setTimeout.apply(null, arguments);
   }
 };
 
-var ReactPlayground = React.createClass({
+const ReactPlayground = React.createClass({
   mixins: [selfCleaningTimeout],
 
   MODES: {JSX: 'JSX', JS: 'JS', NONE: null},
@@ -125,32 +187,32 @@ var ReactPlayground = React.createClass({
     renderCode: React.PropTypes.bool
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
-      transformer: function(code) {
-        return JSXTransformer.transform(code).code;
+      transformer(code) {
+        return babel.transform(code).code;
       }
     };
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       mode: this.MODES.NONE,
       code: this.props.codeText
     };
   },
 
-  handleCodeChange: function(value) {
+  handleCodeChange(value) {
     this.setState({code: value});
     this.executeCode();
   },
 
-  handleCodeModeSwitch: function(mode) {
-    this.setState({mode: mode});
+  handleCodeModeSwitch(mode) {
+    this.setState({mode});
   },
 
-  handleCodeModeToggle: function(e) {
-    var mode;
+  handleCodeModeToggle(e) {
+    let mode;
 
     e.preventDefault();
 
@@ -163,21 +225,21 @@ var ReactPlayground = React.createClass({
         mode = this.MODES.NONE;
     }
 
-    this.setState({mode: mode});
+    this.setState({mode});
   },
 
-  compileCode: function() {
+  compileCode() {
     return this.props.transformer(this.state.code);
   },
 
-  render: function() {
-    var classes = {
+  render() {
+    let classes = {
       'bs-example': true
     };
-    var toggleClasses = {
+    let toggleClasses = {
       'code-toggle': true
     };
-    var editor;
+    let editor;
 
     if (this.props.exampleClassName){
       classes[this.props.exampleClassName] = true;
@@ -186,29 +248,29 @@ var ReactPlayground = React.createClass({
     if (this.state.mode !== this.MODES.NONE) {
        editor = (
            <CodeMirrorEditor
-             key="jsx"
+             key='jsx'
              onChange={this.handleCodeChange}
-             className="highlight"
+             className='highlight'
              codeText={this.state.code}/>
         );
        toggleClasses.open = true;
     }
     return (
-      <div className="playground">
-        <div className={classSet(classes)}>
-          <div ref="mount" />
+      <div className='playground'>
+        <div className={classNames(classes)}>
+          <div ref='mount' />
         </div>
         {editor}
-        <a className={classSet(toggleClasses)} onClick={this.handleCodeModeToggle} href="#">{this.state.mode === this.MODES.NONE ? 'show code' : 'hide code'}</a>
+        <a className={classNames(toggleClasses)} onClick={this.handleCodeModeToggle} href='#'>{this.state.mode === this.MODES.NONE ? 'show code' : 'hide code'}</a>
       </div>
       );
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     this.executeCode();
   },
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     // execute code only when the state's not being updated by switching tab
     // this avoids re-displaying the error, which comes after a certain delay
     if (this.state.code !== nextState.code) {
@@ -216,34 +278,48 @@ var ReactPlayground = React.createClass({
     }
   },
 
-  componentWillUnmount: function() {
-    var mountNode = this.refs.mount.getDOMNode();
+  componentWillUnmount() {
+    let mountNode = React.findDOMNode(this.refs.mount);
     try {
       React.unmountComponentAtNode(mountNode);
-    } catch (e) { }
+    } catch (e) {
+      console.error(e);
+    }
   },
 
-  executeCode: function() {
-    var mountNode = this.refs.mount.getDOMNode();
+  executeCode() {
+    let mountNode = React.findDOMNode(this.refs.mount);
 
     try {
       React.unmountComponentAtNode(mountNode);
-    } catch (e) { }
+    } catch (e) {
+      console.error(e);
+    }
 
+    let compiledCode = null;
     try {
-      var compiledCode = this.compileCode();
+      compiledCode = this.compileCode();
+
       if (this.props.renderCode) {
-        React.renderComponent(
+        React.render(
           <CodeMirrorEditor codeText={compiledCode} readOnly={true} />,
           mountNode
         );
       } else {
+        /* eslint-disable */
         eval(compiledCode);
+        /* eslint-enable */
       }
     } catch (err) {
-      this.setTimeout(function() {
-        React.renderComponent(
-          <Alert bsStyle="danger">{err.toString()}</Alert>,
+      if (compiledCode !== null) {
+        console.log(err, compiledCode);
+      } else {
+        console.log(err);
+      }
+
+      this.updateTimeout(() => {
+        React.render(
+          <Alert bsStyle='danger'>{err.toString()}</Alert>,
           mountNode
         );
       }, 500);
@@ -251,4 +327,4 @@ var ReactPlayground = React.createClass({
   }
 });
 
-module.exports = ReactPlayground;
+export default ReactPlayground;

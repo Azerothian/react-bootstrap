@@ -1,7 +1,5 @@
-/** @jsx React.DOM */
+const progressInstance = (
+  <ProgressBar now={60} label='%(percent)s%' />
+);
 
-var progressInstance = (
-    <ProgressBar now={60} label="%(percent)s%" />
-  );
-
-React.renderComponent(progressInstance, mountNode);
+React.render(progressInstance, mountNode);
